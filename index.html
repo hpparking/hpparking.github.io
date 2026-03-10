@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+
+<html lang="ko" translate="no">
+<head>
+    <meta name="naver-site-verification" content="338f62d26d99529ca9440dc29cb64730944ccee2" />
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="user-scalable=no" />
+    </head>
+    <body>
+
+        <style>
+            #rectangle {
+                background-color: greenyellow;
+                width: 100%; /* 정렬하려는 요소의 넓이를 반드시 지정 */
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            #rectangle1 {
+                background-color: cyan;
+                width: 100%; /* 정렬하려는 요소의 넓이를 반드시 지정 */
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            button {
+                border: medium;
+                background-color: white;
+                color: black;
+                border: none;
+                width: 25px;
+                height: 20px;
+            }
+
+            .wrap {
+                padding: 10px;
+            }
+
+            .btn_open {
+                font-weight: bold;
+                margin: 5px;
+                padding: 4px 6px;
+                background: #000;
+                color: #fff;
+            }
+
+            .pop_wrap {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,.5);
+                font-size: 0;
+                text-align: center;
+            }
+
+                .pop_wrap:after {
+                    display: inline-block;
+                    height: 80%;
+                    vertical-align: middle;
+                    content: '';
+                }
+
+                .pop_wrap .pop_inner {
+                    display: inline-block;
+                    padding: 40px;
+                    background: #fff;
+                    width: 730px;
+                    vertical-align: middle;
+                    /*align-content: center;*/
+                    font-size: 12px;
+                }
+
+            /* 삼각형 없애기
+            summary {
+              list-style: none;
+            }
+            summary::-webkit-details-marker {
+              display: none;
+            }
+            */
+            .container {
+                width: 100%; /* 정렬하려는 요소의 넓이를 반드시 지정 */
+                text-align: center;
+                margin: 0 auto;
+            }
+            
+        </style>
+
+
+        <div id="popupOverlay" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+">
+
+    <div id="popupBox" style="
+        background:white;
+        width:600px;
+        max-width:90%;
+        border-radius:12px;
+        overflow:hidden;
+    ">
+
+        <div style="
+            background:#ff4d4d;
+            color:white;
+            padding:15px;
+            font-weight:bold;
+            font-size:22px;
+        ">
+            🔔 알림
+        </div>
+
+        <div id="popupContent" style="
+            padding:30px;
+            text-align:center;
+            font-size:24px;
+        ">
+            내용
+            <br><br>
+            <button onclick="closePopup()" style="
+                padding:15px 40px;
+                font-size:20px;
+            ">닫기</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+            <div class="container">
+            <br>
+            <br>
+            <br>
+            <strong style="font-size: 55px;">현대 주차장(요금계산&바로예약)</strong>
+            <br>
+            <br>
+            <div id=rectangle>
+
+                <br>
+                <!-- 입차 일시,,,, -->
+                <strong style="font-size: 44px;">(여행가는날)주차장 차량입고 날짜을 선택 하세요.</strong>
+                <br>
+                <br>
+                <button style="border: 5px solid gray; background-color: white; border-color: black; width: 600px; height: 64px; font-size: 44px; " onclick="pop_open(1);"><strong id="parking_inday" style="font-size: 44px;">입차일시 : 2024년 12월 29일</strong></button>
+                <br>
+                <br>
+                <strong style="font-size: 44px;">(여행가는날)주차장 차량입고 시간을 선택 하세요.</strong>
+                <br>
+                <br>
+                <button style="border :5px solid gray;background-color: white;border-color: black;width: 390px; height: 64px; font-size: 44px;" onclick="pop_open(3);"><strong id="parking_intime" style="font-size: 44px;">오후 : 3시(15시)</strong></button><br>
+
+                <br>
+                <br>
+
+            </div>
+            <br>
+            <!-- 출차 일시,,,, -->
+            <div id=rectangle1>
+                <br>
+                <strong style="font-size: 44px;">(갔다 오는날)김해공항 도착 날짜을 선택 하세요.</strong>
+                <br>
+                <br>
+                <button style="border :5px solid gray;background-color: white;border-color: black;width: 600px; height: 64px; font-size: 44px;" onclick="pop_open(2);"><strong id="parking_outday" style="font-size: 44px;">입차일시 : 2024년 12월 29일</strong></button>
+                <br>
+                <br>
+                <strong style="font-size: 44px;">(갔다 오는날)김해공항 도착 시간을 선택 하세요.</strong>
+                <br>
+                <br>
+                <button style="border :5px solid gray;background-color: white;border-color: black;width: 390px; height: 64px; font-size: 44px;" onclick="pop_open(4);"><strong id="parking_outtime" style="font-size: 44px;">오후 : 3시(15시)</strong></button>
+                <br>
+                <br>
+                <br>
+            </div>
+            <!--<p>XHTML(Extensible HyperText Markup Language)은 확장성이 있는 하이퍼텍스트 마크업 언어이다.</p>-->
+
+
+            <div class="wrap">
+
+                <div id="pop_info_1" class="pop_wrap" style="display:none;">
+
+                    <div class="pop_inner">
+                        <!-- 달력 표시...-->
+                        <strong id="title0" style="font-size: 40px;">오류가 있습니다</strong>
+                        <br>
+                        <br>
+                        <div id="calendar"></div>
+                        <br>
+                        <button style="border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 40px;" onclick="pop_close();"><strong>닫기</strong></button>
+                    </div>
+
+                </div>
+
+                <div id="pop_info_2" class="pop_wrap" style="display:none;">
+
+                    <div class="pop_inner">
+                        <!-- 달력 표시...-->
+                        <strong id="title1" style="font-size: 40px;">오류가 있습니다</strong>
+                        <br>
+                        <br>
+                        <div id="time1"></div>
+                        <br>
+                        <button style="border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 40px;" onclick="pop_close();"><strong>닫기</strong></button>
+                    </div>
+
+                </div>
+
+                <div id="pop_info_3" class="pop_wrap" style="display:none;">
+
+                    <div class="pop_inner" style="width: 700px;">
+                        <!-- 계산.예약 뷰...-->
+                        <strong id="cash" style="font-size: 50px;">오류...</strong>
+                        <br>
+                        <br>
+                        <strong id="title2" style="border-color: darkred;font-size: 34px;">오류가 있습니다</strong>
+                        <br>
+                        <div id="cash_view"></div>
+                        <br>
+
+                        <button style="border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 40px;" onclick="cash_call_close(3);"><strong>닫기</strong></button>
+                        <button style="width: 200px; height: 64px;"></button>
+                        <button style="border :1px solid gray;background-color: white;border-color: black;width: 300px; height: 64px; font-size: 40px;" onclick="cash_box_call();"><strong>바로 예약</strong></button>
+                    </div>
+
+                </div>
+                <!-- 숫자 패드....,,,, -->
+                <div id="pop_info_4" class="pop_wrap" style="display:none;">
+
+                    <div class="pop_inner" style="width: 800px;">
+                        <!-- 달력 표시...-->
+                        <strong id="num_pad_title" style="font-size: 40px;">오류가 있습니다</strong>
+                        <button id="num_filld" style="border :1px solid gray;background-color: white;border-color: black;width: 400px; height: 64px; font-size: 40px;"><strong>예) 1234</strong></button>
+                        <br>
+                        <br>
+                        <div id="num_pad"></div>
+                        <br>
+                    </div>
+
+                </div>
+                <!-- 예약 보내고 대기창 & 예약 결과창....,,,, -->
+                <div id="pop_info_5" class="pop_wrap" style="display:none;">
+
+                    <div class="pop_inner" style="background-color: darkturquoise; width: 900px;">
+                        <strong id="cashcallredy_text" style="font-size: 40px;">오류가 있습니다</strong>
+                        <br>
+                        <br>
+                        <div id="cashcallredy_view"></div>
+                        <br>
+                        <br>
+                        <button style="border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 40px;" onclick="cash_call_close(5);"><strong>닫기</strong></button>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <div id=rectangle1>
+                <strong style="font-size: 50px;">위 입차, 출차 날짜 시간을<br>정확히 입력하세요</strong>
+                <br>
+            </div>
+            <br>
+            <button style="border: 6px solid gray; background-color: white; border-color: green; width: 600px; height: 84px; font-size: 50px;" onclick="cash_call();"><strong>요금 계산하기/바로예약</strong></button>
+            <br>
+            <br>
+
+            <br>
+            <br>
+            <button style="border: 6px solid gray; background-color: white; border-color: green; width: 550px; height: 84px; font-size: 50px;" onclick="serch_phon_box();"><strong>예약 확인(조회)하기</strong></button>
+            <br>
+
+
+
+        </div>
+        <!-- 처음부터 보이려면, <details open > -->
+        <script type="text/javascript">
+
+            window.onload = function deviceCheck() {
+
+                const user = navigator.userAgent;
+
+                if (user.indexOf("iPhone") > -1 || user.indexOf("Android") > -1) {
+                    //mobile버젼
+                    document.body.style.zoom = "100%";
+                } else {
+                    //pc버젼
+                    document.body.style.zoom = "50%";
+                }
+            }
+
+            var target = document.querySelectorAll('.btn_open');
+            var btnPopClose = document.querySelectorAll('.pop_wrap .btn_close');
+            var targetID;
+            var in_out = 1;
+            // 팝업 열기
+            //for (var i = 0; i < target.length; i++) {
+            function pop_open(num) {
+                //targetID = this.getAttribute('href');
+                in_out = num;
+                if (in_out == 1 || in_out == 2) {
+                    if (in_out == 1) {
+                        in_yer = currentYer;
+                        in_mon = mon;
+                        document.getElementById("title0").innerHTML = "주차장 입차 날짜을 선택하세요.";
+                    }
+                    if (in_out == 2) {
+                        out_yer = in_yer;
+                        out_mon = in_mon;
+                        document.getElementById("title0").innerHTML = "김해공항 도착 날짜을 선택하세요.";
+                    }
+                    printMonthNow();
+                    document.getElementById("pop_info_1").style.display = 'block';
+                }
+                if (in_out == 3 || in_out == 4) {
+                    if (in_out == 3) {
+                        document.getElementById("title1").innerHTML = "주차장 입차 시간을 선택하세요.";
+                    }
+                    if (in_out == 4) {
+                        document.getElementById("title1").innerHTML = "김해공항 도착 시간을 선택하세요.";
+                    }
+
+                    document.getElementById("pop_info_2").style.display = 'block';
+                    //click_time();
+                }
+            }
+
+            //}
+
+
+            // 팝업 닫기
+            //for (var j = 0; j < target.length; j++) {
+            function pop_close() {
+
+                if (in_out == 1 || in_out == 2) {
+                    document.getElementById("pop_info_1").style.display = 'none';
+                    in_yer = memo_inyer;
+                    currentYer = memo_inyer;
+                    in_mon = memo_inmon;
+                    mon = memo_inmon;
+                }
+                if (in_out == 3 || in_out == 4) {
+                    document.getElementById("pop_info_2").style.display = 'none';
+                }
+                if (in_out == 5) {
+                    document.getElementById("pop_info_4").style.display = 'none';
+                }
+            }
+            function pop_num_close(a) {
+                if (a == 1) {
+                    document.getElementById("num_car_no").innerHTML = document.getElementById("num_filld").innerHTML;
+                    car_no = document.getElementById("num_filld").innerText;
+                    document.getElementById("pop_info_4").style.display = 'none';
+                }
+                if (a == 2) {
+                    document.getElementById("num_phon_no").innerHTML = document.getElementById("num_filld").innerHTML;
+                    phon_no = document.getElementById("num_filld").innerText;
+                    document.getElementById("pop_info_4").style.display = 'none';
+                }
+
+            }
+
+            function serch_phon_close() {
+
+                //document.getElementById("num_car_no").innerHTML = document.getElementById("num_filld").innerHTML;
+                //car_no = document.getElementById("num_filld").innerHTML;
+                document.getElementById("pop_info_4").style.display = 'none';
+            }
+
+
+            //let socket = new WebSocket("ws://rillgame.iptime.org:55584");
+            //var month = document.getElementById("month1");
+            var currentDate = new Date();
+            var id = "";
+            var currentYer = currentDate.getFullYear(); //현재 연도
+            var currentMonth = currentDate.getMonth() + 1;//
+            var mon = currentMonth;
+            calendar_box = document.getElementById("calendar");
+            var time_box = document.getElementById("time1");
+            var cash_box = document.getElementById("cash_view");
+            var num_pad_box = document.getElementById("num_pad");
+            var cash_call_box = document.getElementById("cashcallredy_view");
+
+            var in_yer = currentYer;
+            var out_yer = currentYer;
+            var in_mon = currentMonth;
+            var out_mon = currentMonth;
+            var in_day = currentDate.getDate();
+            var out_day = currentDate.getDate();
+            var in_time = currentDate.getHours();
+            var out_time = currentDate.getHours();
+            var memo_inyer = currentYer;
+            var memo_inmon = currentMonth;
+            let car_no = "";
+            let phon_no = "";
+
+            let numbers = [];
+
+            let mainmony = [];
+            let mainday = [];
+            let maingoldday = [];
+
+            document.getElementById("parking_inday").innerHTML = in_yer + "년 " + in_mon + "월 " + in_day + "일";
+            document.getElementById("parking_outday").innerHTML = out_yer + "년 " + out_mon + "월 " + out_day + "일";
+            if (in_time > 12) {
+                na = "오후 : ";
+            } else {
+                na = "오전 : ";
+            }
+            document.getElementById("parking_intime").innerHTML = na + in_time + "시";
+            document.getElementById("parking_outtime").innerHTML = na + in_time + "시";
+
+            printMonthNow();
+            click_time();
+
+            function printMonthNow() {
+                var monthNames = [
+                    "1월", "2월", "3월", "4월", "5월", "6월",
+                    "7월", "8월", "9월", "10월", "11월", "12월"
+                ];
+                //var date = new Date();
+                //날짜 객체 생성
+                //currentYer = date.getFullYear();
+                //현재 연도
+                //var nowM = date.getMonth() + 1;
+                //mon = nowM;
+                /*
+                if (in_out == 1) {
+                    
+                    //mon = in_mon;
+                    printCalendar(in_yer, mon);
+                }
+                if (in_out == 2) {
+                    //out_yer = currentYer;
+                    //mon = out_mon;
+                    printCalendar(in_yer, mon);
+                }
+                */
+                printCalendar(memo_inyer, memo_inmon);
+            }
+
+            function printMonth() {
+                if (mon == 1) {
+                    currentYer -= 1;
+                    mon = 12;
+                }
+                else {
+                    mon -= 1;
+                }
+
+                if (in_out == 1) {
+                    in_yer = currentYer;
+                    in_mon = mon;
+                }
+                if (in_out == 2) {
+                    out_yer = currentYer;
+                    out_mon = mon;
+                }
+                //영어로 바꾸기
+                //var monthNames = [
+                // "1월", "2월", "3월", "4월", "5월", "6월",
+                // "7월", "8월", "9월", "10월", "11월", "12월"
+                //];
+
+                //var currentMonthName = monthNames[mon];
+                //var mon = currentMonth;
+                //document.getElementById("month1").innerHTML = currentYer + "년 " + mon + "월";
+                //month1.innerHTML = "<h2>" + currentYer + "년" + mon + "</h2>";
+                //document.getElementById("aaa").innerHTML = currentYer + "년" + mon;
+                printCalendar(currentYer, mon);
+            }
+
+            function printMonth1() {
+                if (mon == 12) {
+                    currentYer += 1;
+                    mon = 1;
+                }
+                else {
+                    mon += 1;
+                }
+
+                if (in_out == 1) {
+                    in_yer = currentYer;
+                    in_mon = mon;
+                }
+                if (in_out == 2) {
+                    out_yer = currentYer;
+                    out_mon = mon;
+                }
+                //영어로 바꾸기
+                //var monthNames = [
+                // "1월", "2월", "3월", "4월", "5월", "6월",
+                // "7월", "8월", "9월", "10월", "11월", "12월"
+                //];
+
+                //var currentMonthName = monthNames[mon];
+                //var mon = currentMonth;
+                //document.getElementById("month1").innerHTML = "<th type='button' onclick='printMonth();'> 이전달 currentYer + 년  + mon + 월</th>";
+                //month1.innerHTML = "<h2>" + currentYer + "년" + mon + "</h2>";
+                //document.getElementById("aaa").innerHTML = currentYer + "년" + mon;
+                printCalendar(currentYer, mon);
+            }
+
+            //이번 달 달력 그리기
+
+            function printCalendar(y, m) {
+                var ff = y;
+                //① 현재 날짜와 현재 달에 1일의 날짜 객체를 생성합니다.
+                var date0 = new Date();
+                var date = new Date();
+                //날짜 객체 생성
+                var nowY = date0.getFullYear();
+                //현재 연도
+                var nowM = date0.getMonth();
+                //현재 월
+                var nowD = date0.getDate();
+                //현재 일
+                var date7 = new Date();
+
+                if (in_out == 1) {
+                    date = new Date(nowY, nowM, nowD);
+                }
+                if (in_out == 2) {
+                    date = new Date(in_yer, in_mon-1 , in_day);//
+                }
+
+                y = (y != undefined) ? y : nowY;
+                m = (m != undefined) ? m - 1 : nowM;//
+                /* 현재 월의 1일에 요일을 구합니다.
+                  그럼 그달 달력에 첫 번째 줄 빈칸의 개수를 구할 수 있습니다.*/
+                var theDate = new Date(y, m, 1);
+                var theDay = theDate.getDay();
+                var days = new Date(theDate.getFullYear(), theDate.getMonth() + 1, 0).getDate();//
+                //document.getElementById("test").innerHTML = days;
+                //② 현재 월에 마지막 일을 구해야 합니다. //1월부터 12월까지 마지막 일을 배열로 저장함.
+                var last = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                /*현재 연도가 윤년(4년 주기이고 100년 주기는 제외합니다.
+                  또는 400년 주기)일경우 2월에 마지막 날짜는 29가 되어야 합니다.*/
+                if (y % 4 == 0 && y % 100 != 0 || y % 400 == 0) lastDate = last[1] = 29;
+                var lastDate = last[m];
+                //현재 월에 마지막이 몇일인지 구합니다. //③ 현재 월의 달력에 필요한 행의 개수를 구합니다.
+                var row = Math.ceil((theDay + lastDate) / 7);
+                //필요한 행수 //④ 달력 년도/월 표기 및 달력 테이블 생성
+                //calendar_box.innerHTML = "<h2>" + y + "." + (m + 1) + "</h2>";
+                //calendar_box.innerHTML += "<th type='button' onclick='printMonth();'> 이전달</th>";
+                //calendar_box.innerHTML += "<th type='button' onclick='printMonth1();'> 다음달</th>";
+                //문자결합 연산자를 사용해 요일이 나오는 행을 생성
+                var calendar = "<table border='1'>";
+                //calendar += "<tr>";       <div id="month1"></div>
+                calendar += "<button style='border :1px solid gray;background-color: green;border-color: white;width: 190px; height: 85px; font-size: 50px;' onclick='printMonth();'>이전달</button>";
+                calendar += "<button id='month1'style='border :1px solid gray;background-color: white;border-color: black;width: 330px; height: 85px; font-size: 50px;'>이전달</button>";
+
+                //calendar += "<h2 id='month1' style='font-size: 12px;'>" + currentYer + "년" + mon + "</h2>";
+                calendar += "<button style='border :1px solid gray;background-color: green;border-color: white;width: 190px; height: 85px; font-size: 50px;' onclick='printMonth1();'>다음달</button>";
+
+                calendar += "<tr>";
+
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>일</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>월</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>화</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>수</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>목</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>금</th>";
+                calendar += "<th style='white;width: 103px; height: 85px; font-size: 50px;'>토</th>";
+                calendar += "</tr>";
+                //console.log(nowD);
+                var dNum = 1;
+                //이중 for문을 이용해 달력 테이블을 생성
+
+                for (var i = 1; i <= row; i++) {
+                    //행 생성 (tr 태그 생성)
+                    calendar += "<tr>";
+                    for (var k = 1; k <= 7; k++) {
+                        //열 생성 (td 태그 생성)
+                        /*행이 첫 줄이고 현재 월의 1일의 요일 이전은 모두 빈열로
+                            표기하고 날짜가 마지막 일보다 크면 빈열로 표기됩니다.*/
+                        if (i == 1 && k < theDay + 1 || dNum > days) {
+                            //빈공간...
+                            calendar += "<td> &nbsp; </td>";
+                        }
+                        else {
+                            date7 = new Date(theDate.getFullYear(), theDate.getMonth(), dNum);//
+                            var todayFormatted = date7.toISOString().split('T')[0];
+                            var todayFormatted1 = date.toISOString().split('T')[0];
+                            //console.log(todayFormatted + " ----  " + todayFormatted1);
+                            // 오늘 날짜 또는 출차 날짜 이하느 색상 흐림...
+                            if (todayFormatted < todayFormatted1) {
+                                calendar += "<td style='white;width: 103px; height: 85px; font-size: 50px;color: #848484;'>" + dNum + "</td>";
+                            }
+                            else {
+                                calendar += "<td><button id=" + dNum + " style='white;width: 103px; height: 85px; font-size: 50px;'onclick='click_day_no(this)'>" + dNum + "</button></td>";
+                                //"<td>" + dNum + "</td>";
+                            }
+
+                            dNum++;
+                        }
+                    }
+                    calendar += "<tr>";
+                }
+
+                //⑤ 문자로 결합된 달력 테이블을 문서에 출력
+                calendar_box.innerHTML = calendar;
+                document.getElementById("month1").innerHTML = currentYer + "년 " + mon + "월";//
+
+
+            }
+
+
+
+            function click_day_no(e) {
+                //document.getElementById("test").innerHTML = document.getElementById(e.getAttribute('id')).getAttribute('id');
+                if (in_out == 1) {
+                    in_day = document.getElementById(e.getAttribute('id')).getAttribute('id');
+                    in_yer = currentYer;
+                    in_mon = mon;
+                    document.getElementById("parking_inday").innerHTML = "입차일시 : " + currentYer + "년 " + mon + "월 " + in_day + "일";
+                    //console.log("입차일시 : " + in_yer + "년 " + in_mon + "월 " + in_day + "일");
+                } else {
+                    out_day = document.getElementById(e.getAttribute('id')).getAttribute('id');
+                    out_yer = currentYer;
+                    out_mon = mon;
+                    document.getElementById("parking_outday").innerHTML = "출차일시 : " + currentYer + "년 " + mon + "월 " + out_day + "일";
+                }
+                memo_inyer = in_yer;
+                memo_inmon = in_mon;
+                //택스트 글자크기.....
+                //document.getElementById("parking_inday").style.fontSize = "12px";
+                pop_close();
+            }
+
+            //주차장 도착시간....
+            function click_time() {
+
+                if (in_out == 3) {
+                    document.getElementById("title1").innerHTML = "주차장 도착 시간을 입력하세요.";
+                }
+                if (in_out == 4) {
+                    document.getElementById("title1").innerHTML = "김해공항 도착 시간을 입력하세요.";
+                }
+
+                //현재 월에 마지막이 몇일인지 구합니다. //③ 현재 월의 달력에 필요한 행의 개수를 구합니다.
+                //var row = Math.ceil((theDay + lastDate) / 7);
+                //필요한 행수 //④ 달력 년도/월 표기 및 달력 테이블 생성
+                //calendar_box.innerHTML = "<h2>" + y + "." + (m + 1) + "</h2>";
+                //calendar_box.innerHTML += "<th type='button' onclick='printMonth();'> 이전달</th>";
+                //calendar_box.innerHTML += "<th type='button' onclick='printMonth1();'> 다음달</th>";
+                //문자결합 연산자를 사용해 요일이 나오는 행을 생성
+                var calendar = "<table border='1'>";
+                //calendar += "<tr>";       <div id="month1"></div>
+
+                calendar += "<tr>";
+                // calendar += "</tr>";
+                //calendar += "<tr>";
+                calendar += "<button style='border :1px solid gray;background-color: gray;border-color: black;width: 290px; height: 85px; font-size: 44px;'><strong> 오 전 </strong></button>";
+                calendar += "<button style='border :1px solid gray;background-color: gray;border-color: black;width: 290px; height: 85px; font-size: 44px;'><strong> 오 후 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(5,this);'><strong> 05시 30분 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(13,this);'><strong> 13시(1시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(6,this);'><strong> 06시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(14,this);'><strong> 14시(2시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(7,this);'><strong> 07시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(15,this);'><strong> 15시(3시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(8,this);'><strong> 08시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(16,this);'><strong> 16시(4시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(9,this);'><strong> 09시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(17,this);'><strong> 17시(5시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(10,this);'><strong> 10시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(18,this);'><strong> 18시(6시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(11,this);'><strong> 11시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(19,this);'><strong> 19시(7시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(12,this);'><strong> 12시 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(20,this);'><strong> 20시(8시) </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(22,this);'><strong> 21(9시)이후 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 290px; height: 85px; font-size: 44px;' onclick='click_time_no(21,this);'><strong> 21시(9시) </strong></button>";
+
+                calendar += "</th>";
+
+                //⑤ 문자로 결합된 달력 테이블을 문서에 출력
+                time_box.innerHTML = calendar;
+                //document.getElementById("month1").innerHTML = currentYer + "년 " + mon + "월";
+
+
+            }
+            function click_time_no(e, t) {
+                var na = "";
+                if (e > 12) {
+                    na = "오후 : ";
+                } else {
+                    na = "오전 : ";
+                }
+
+                if (in_out == 3) {
+                    in_time = e;
+                    //const btnElement = document.getElementById(t.getAttribute('id')).getAttribute('id');
+                    document.getElementById("parking_intime").innerHTML = na + t.textContent;
+                }
+                if (in_out == 4) {
+                    out_time = e;
+                    document.getElementById("parking_outtime").innerHTML = na + t.textContent;;
+                }
+
+                //택스트 글자크기.....
+                //document.getElementById("parking_inday").style.fontSize = "12px";
+                pop_close();
+                //showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>영업시간...<br>05시 20분 부터~ 21시(밤9시) 까지<br>이후 야간출차(셔틀운행 안됨).</div>");
+            }
+            
+
+            function serch_phon_click() {
+                //document.getElementById("pop_info_5").style.display = 'block';
+
+                //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 450px; height: 100px;font-size: 44px;'font color='red'>잠시만 기다려 주세요.<br> 예약 확인(조회)중입니다.</font><br>";
+                searchReservation();//document.getElementById("num_filld").innerHTML
+
+                //var data = "Serch_phon*" + serch_phon;
+                //if (socket.OPEN == true) {
+                //    socket.send(id + data);
+                //} else {
+                //    socket = new WebSocket("ws://rillgame.iptime.org:55584");
+                //}
+
+            }
+
+            function serch_phon_box() {
+                document.getElementById("pop_info_4").style.display = 'block';
+                document.getElementById("num_pad_title").innerHTML = "<font color='red'>-- 예약자 전화번호로 조회 가능합니다 --<br>전화번호 입력후 조회하기.</font><br>";
+                document.getElementById("num_filld").innerHTML = "예) 01012345678";
+                
+                var calendar = "<table border='1'>";
+                //calendar += "<tr>";       <div id="month1"></div>
+
+                calendar += "<tr>";
+                // calendar += "</tr>";
+                //calendar += "<tr>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(1);'><strong> 1 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(2);'><strong> 2 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(3);'><strong> 3 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(4);'><strong> 4 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(5);'><strong> 5 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(6);'><strong> 6 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(7);'><strong> 7 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(8);'><strong> 8 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(9);'><strong> 9 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(11);'><strong> <-- </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(0);'><strong> 0 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 36px;' onclick='click_num_no(12);'><strong> 모두지움 </strong></button>";
+                calendar += "<br>";
+                calendar += "<br>";
+                calendar += "<button style='border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 44px;' onclick='serch_phon_close();'><strong>닫기</strong></button>";
+                calendar += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                calendar += "<button style='border :1px solid gray;background-color: white;border-color: black;width: 300px; height: 64px; font-size: 44px;' onclick='serch_phon_click();'><strong>예약확인</strong></button>";
+                calendar += "<br>";
+                //calendar += "</th>";
+
+                //⑤ 문자로 결합된 달력 테이블을 문서에 출력
+                num_pad_box.innerHTML = calendar;
+            }
+
+            function click_num_pad(a) {
+                //car_no = "";
+                //phon_no = "";
+                document.getElementById("pop_info_4").style.display = 'block';
+                if (a == 1) {
+                    document.getElementById("num_pad_title").innerHTML = "차량번호 뒤 4자리 입력하세요!!.<br>";
+                    document.getElementById("num_filld").innerHTML = "예) 1234";
+                }
+                if (a == 2) {
+                    document.getElementById("num_pad_title").innerHTML = "예약자 전화번호를 입력하세요!.<br>";
+                    document.getElementById("num_filld").innerHTML = "예) 01012345678";
+                }
+                var calendar = "<table border='1'>";
+                //calendar += "<tr>";       <div id="month1"></div>
+
+                calendar += "<tr>";
+                // calendar += "</tr>";
+                //calendar += "<tr>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(1);'><strong> 1 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(2);'><strong> 2 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(3);'><strong> 3 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(4);'><strong> 4 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(5);'><strong> 5 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(6);'><strong> 6 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(7);'><strong> 7 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(8);'><strong> 8 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(9);'><strong> 9 </strong></button>";
+                calendar += "<br>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(11);'><strong> <-- </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 44px;' onclick='click_num_no(0);'><strong> 0 </strong></button>";
+                calendar += "<button id='timeno' style='border :1px solid gray;background-color: white;border-color: black;width: 250px; height: 95px; font-size: 36px;' onclick='click_num_no(12);'><strong> 모두지움 </strong></button>";
+                calendar += "<br>";
+                calendar += "<br>";
+                calendar += "<button style='border :1px solid gray;background-color: white;border-color: black;width: 120px; height: 64px; font-size: 44px;' onclick='pop_num_close(" + a + ");'><strong>닫기</strong></button>";
+                calendar += "<br>";
+                //calendar += "</th>";
+
+                //⑤ 문자로 결합된 달력 테이블을 문서에 출력
+                num_pad_box.innerHTML = calendar;
+            }
+            function click_num_no(no) {
+                if (document.getElementById("num_filld").innerText.toString().indexOf('예') != -1) {
+                    document.getElementById("num_filld").innerHTML = "";
+                    if (no == 11) {
+                    } else {
+                        if (no == 12) {
+
+                        } else {
+                            document.getElementById("num_filld").innerHTML += no;
+                        }
+                    }
+                } else {
+                    if (no == 11) {
+                        var a = document.getElementById("num_filld").innerText;
+                        a = a.slice(0, -1);
+                        document.getElementById("num_filld").innerHTML = a;
+                        //str = str.slice(0, -1);
+                    } else {
+                        if (no == 12) {
+                            document.getElementById("num_filld").innerHTML = "";
+                        } else {
+                            document.getElementById("num_filld").innerHTML += no;
+                        }
+                    }
+                }
+            }
+            //요금 계산...
+            function cash_call() {
+                car_no = "";
+                phon_no = "";
+                // 🔥 여기서 배열로 변환
+                //let specialDays = specialDaysString.split("^").filter(d => d !== "");
+                //alert("여기 들어옴");
+                const checkInValue =
+                    in_yer + "-" +
+                    String(in_mon).padStart(2, "0") + "-" +
+                    String(in_day).padStart(2, "0") + "T" +
+                    String(in_time).padStart(2, "0") + ":00";
+
+                const checkOutValue =
+                    out_yer + "-" +
+                    String(out_mon).padStart(2, "0") + "-" +
+                    String(out_day).padStart(2, "0") + "T" +
+                    String(out_time).padStart(2, "0") + ":00";
+
+                if (!checkInValue || !checkOutValue) {
+                    document.getElementById("cash").innerHTML =
+                        "<div style='color:red;'>날짜를 선택하세요</div>";
+                    return;
+                }
+
+                const checkIn = new Date(checkInValue);
+                const checkOut = new Date(checkOutValue);
+
+                checkIn.setHours(0,0,0,0);
+                checkOut.setHours(0,0,0,0);
+
+
+                const extraStart = new Date(maingoldday[0]);
+                const extraEnd = new Date(maingoldday[1]);
+
+                extraStart.setHours(0,0,0,0);
+                extraEnd.setHours(0,0,0,0);
+
+                let sun_m = 0;   // 주말/특정일 금액
+                let day_m = 0;   // 평일 금액
+                let sn = 0;      // 주말/특정일 일수
+                let dn = 0;      // 평일 일수
+
+                let current = new Date(checkIn);
+
+                while (current <= checkOut) {
+
+                    let yyyy = current.getFullYear();
+                    let mm = String(current.getMonth() + 1).padStart(2, '0');
+                    let dd = String(current.getDate()).padStart(2, '0');
+                    let dateStr = `${yyyy}-${mm}-${dd}`;
+
+                    let day = current.getDay(); // 0=일 5=금 6=토
+
+                    // 🔥 특정일 OR 금/토/일
+                    if (mainday.includes(dateStr) || (current >= extraStart && current <= extraEnd) || day === 0 || day === 5 || day === 6) {
+                        sn++;
+                        sun_m += parseInt(mainmony[1]);
+                        if(current >= extraStart && current <= extraEnd)
+                        {
+                            console.log("특정일 " + current);
+                        }
+                    }
+                    else {
+                        dn++;
+                        day_m += parseInt(mainmony[0]);
+                    }
+
+                    current.setDate(current.getDate() + 1);
+                }
+
+                totalPrice = sun_m + day_m;
+
+                let formatted = totalPrice.toLocaleString();
+
+                let st_sn = sn !== 0 ? "주말/특정일 " + sn + "일  " : "";
+                let st_dn = dn !== 0 ? "평일 " + dn + "일" : "";
+
+                document.getElementById("pop_info_3").style.display = 'block';
+                
+                document.getElementById("cash_view").innerHTML =
+                    "<div style='font-size:22px;'>금,토,일,특정일 "+mainmony[1]+"원\n 평일 "+mainmony[0]+"원</div>";
+
+                document.getElementById("cash").innerHTML = "요금 " + formatted + " 원";
+                document.getElementById("title2").innerHTML = st_sn + st_dn;
+                //alert(st_sn + st_dn + "<br>요금 : " + formatted);
+            }
+            //function cash_call() {
+            //    document.getElementById("pop_info_3").style.display = 'block';
+
+            //    var data = in_yer + "/" + in_mon + "/" + in_day + "/" + in_time + "*" + out_yer + "/" + out_mon + "/" + out_day + "/" + out_time;
+            //    if (socket.OPEN == true) {
+            //        socket.send(id + data);
+                    //alert("데이터를 서버에 전송해봅시다.");
+            //    } else {
+            //        socket = new WebSocket("ws://rillgame.iptime.org:55584");
+            //    }
+
+            //}
+            //예약 보내기...
+            function cash_box_call() {
+                in_out = 5;
+                if(car_no == "" && phon_no == "")
+                {
+                document.getElementById("title2").innerHTML = "<font color='red'>바로 예약 하시려면 차량번호 뒤4자리<br>예약자 전화번호 입력후 바로예약 클릭.</font><br>";
+
+                var calendar = "<table border='1'>";
+                calendar += "<tr>";
+                calendar += "<strong style='font-size: 44px;'>차량번호 뒤4자리 입력 </strong>";
+                calendar += "<button style='border :1px solid gray;background-color: white;width: 400px; height: 85px; font-size: 44px;'onclick='click_num_pad(1);'><strong id='num_car_no'> 예) 1234 </strong></button>";
+                calendar += "<br><br>";
+                calendar += "<strong style='font-size: 44px;'>예약자 전화 번호 입력 </strong>";
+                calendar += "<button style='border :1px solid gray;background-color: white;width: 410px; height: 85px; font-size: 44px;'onclick='click_num_pad(2);'><strong id='num_phon_no'> 예) 01012345678 </strong></button>";
+                calendar += "<br>";
+                calendar += "<br>";
+                //calendar += "</th>";
+                //console.log(document.getElementById("num_filld"));
+                //⑤ 문자로 결합된 달력 테이블을 문서에 출력
+                cash_box.innerHTML = calendar;
+                }
+                else{
+                cash_call_send();
+                }
+            }
+
+            //예약 데이터 저장...
+            function cash_call_send() {
+                //document.getElementById("pop_info_5").style.display = 'block';
+                if (car_no.length != 4 || phon_no.length < 10 || phon_no.length > 11) {
+                    //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 450px; height: 100px;font-size: 44px;'font color='red'>차량 뒷번호 4자리<br>휴대폰 번호를 정확히 입력하세요.</font><br>";
+                    showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>차량 뒷번호 4자리<br>휴대폰 번호를 정확히 입력하세요.</div>");
+                    return;
+                }
+                else {
+                    //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 450px; height: 100px;font-size: 44px;'font color='red'>잠시만 기다려 주세요.<br> 예약 접수 중입니다!!.</font><br>";
+                    let a =
+  in_yer + "-" +
+  String(in_mon).padStart(2, "0") + "-" +
+  String(in_day).padStart(2, "0");
+
+let b =
+  out_yer + "-" +
+  String(out_mon).padStart(2, "0") + "-" +
+  String(out_day).padStart(2, "0");
+                    
+                    //let a = in_yer + "-" + in_mon + "-" + in_day;
+                    //let b = out_yer + "-" + out_mon + "-" + out_day;
+                    const stayDays = diffIncludeStart(a, b);
+
+                    // ✅ 입차 요일 구하기 (월=1 ~ 일=7)
+                    const date = new Date(a + "T00:00:00");
+                    let jsDay = date.getDay(); // 0=일 ~ 6=토
+                    let weekIndex = jsDay === 0 ? 7 : jsDay;
+                   console.log("예약 요일 " + a + " -> " + b);
+                   console.log("일 수 : " + stayDays + "   요일 : " + weekIndex +"  요일 데이터 값 : "+numbers[weekIndex]);
+                    // ✅ 조건 검사 후 실행
+                    if(parseInt(out_time) <= 20)
+                    {
+                        if (stayDays >= numbers[weekIndex]) {
+                            saveReservation();
+                        } else {
+                            showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>현재 주차장이 <br>혼잡하오니 예약접수가 되지않습니다.<br>죄송 합니다..</div>");
+                        
+                        }
+                    }
+                    else
+                    {
+                        showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>주차장 영업 시간.<br>05시 20분 부터 21시(밤9시) 까지.<br>죄송 합니다..</div>");
+                    }
+                    //var data = in_yer + "/" + in_mon + "/" + in_day + "/" + in_time + "*" + out_yer + "/" + out_mon + "/" + out_day + "/" + out_time + "*" + car_no + "/" + phon_no;
+                    
+                }
+                //car_no = "";
+                //phon_no = "";
+                //document.getElementById("pop_info_3").style.display = 'block';
+                        //document.getElementById("cash_view").innerHTML = te[3].toString();
+                        //document.getElementById("cash").innerHTML = te[3].toString();
+                        
+            }
+            // 예약 데이터 저장...에서 호출.....
+            function diffIncludeStart(a, b) {
+                const d1 = new Date(a + "T00:00:00");
+                const d2 = new Date(b + "T00:00:00");
+                return ((d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+            }
+
+            function cash_call_close(a) {
+                document.getElementById("pop_info_" + a).style.display = 'none';
+            }
+            //함수 실행
+            //printMonth();
+            //printCalendar();
+            //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 750px; height: 100px;font-size: 44px;'font color='red'>예약 접수<br> 완료 되었습니다!!.</font><br>";
+            
+            window.showPopup = function(message) {
+  document.getElementById("popupContent").innerHTML =
+    message +
+    "<br><br>" +
+    "<button onclick='closePopup()' style='" +
+    "padding:30px 80px;" +
+    "font-size:34px;" +
+    "border:none;" +
+    "border-radius:10px;" +
+    "background:#ff4d4d;" +
+    "color:white;" +
+    "cursor:pointer;" +
+    "white-space:nowrap;" +
+    "display:flex;" +                // 🔥 핵심
+    "justify-content:center;" +      // 가로 중앙
+    "align-items:center;" +          // 세로 중앙
+    "margin:0 auto;" +              // 버튼 자체도 중앙
+    "'>확 인</button>";
+
+  document.getElementById("popupOverlay").style.display = "flex";
+}
+
+window.closePopup = function() {
+  document.getElementById("popupOverlay").style.display = "none";
+}
+
+        </script>
+               
+<!--
+        <h2>주차장 예약</h2>
+
+  <input id="name" placeholder="이름"><br>
+  <input id="phone" placeholder="전화번호"><br>
+  <input id="carNumber" placeholder="차량번호"><br>
+  <input id="checkIn" type="datetime-local"><br>
+  <input id="checkOut" type="datetime-local"><br>
+
+  <button type="button" onclick="saveReservation()">예약하기</button>"
+
+  <h3>예약 목록</h3>
+  <div id="reservationList"></div>
+  -->
+
+        <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+//import { get, ref, set } from "firebase/database";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLnisp16OuLsNF32jAoc2S6dz3eLNEcsY",
+  authDomain: "paking-data.firebaseapp.com",
+  databaseURL: "https://paking-data-default-rtdb.firebaseio.com",
+  projectId: "paking-data",
+  storageBucket: "paking-data.firebasestorage.app",
+  messagingSenderId: "335256389912",
+  appId: "1:335256389912:web:012f45d4d460f84dd2766d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// 예약 저장 (전화번호를 ID로 사용)
+window.saveReservation = function() {
+    if (car_no.length != 4) {
+                    //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 450px; height: 100px;font-size: 44px;'font color='red'>차량 뒷번호 4자리<br>휴대폰 번호를 정확히 입력하세요.</font><br>";
+                    showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>차량 뒷번호 4자리<br>정확히 입력하세요.</div>");
+                    return;
+    }
+    if(phon_no.length < 10 || phon_no.length > 11) {
+                    //document.getElementById("cashcallredy_text").innerHTML = "<style='width: 450px; height: 100px;font-size: 44px;'font color='red'>차량 뒷번호 4자리<br>휴대폰 번호를 정확히 입력하세요.</font><br>";
+                    showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>휴대폰 번호를 정확히 입력하세요.</div>");
+                    return;
+    }
+  //var inn = in_yer + "/" + in_mon + "/" + in_day + "/" + in_time;
+  //var out = out_yer + "/" + out_mon + "/" + out_day + "/" + out_time;
+  var inn =
+  in_yer + "-" +
+  String(in_mon).padStart(2, "0") + "-" +
+  String(in_day).padStart(2, "0") + "-" +
+  String(in_time).padStart(2, "0");
+
+var out =
+  out_yer + "-" +
+  String(out_mon).padStart(2, "0") + "-" +
+  String(out_day).padStart(2, "0") + "-" +
+  String(out_time).padStart(2, "0");
+  //const name = document.getElementById("name").value;
+  //const phone = document.getElementById("phone").value.replace(/[^0-9]/g, "");
+  //const carNumber = document.getElementById("carNumber").value;
+  var checkIn =  inn;//document.getElementById("checkIn").value;
+  var checkOut = out;//document.getElementById("checkOut").value;
+
+
+    const reservationRef = ref(db, "reservations/" + phon_no);
+
+  get(reservationRef).then((snapshot) => {
+
+    if (snapshot.exists()) {
+
+      // 🔴 이미 예약 있음
+      showPopup("<div style='border:1px solid #ccc; padding:10px; margin-top:10px; font-weight:bold; font-size:34px;'>이미 해당 번호로 예약이 존재합니다.</div>");
+
+      return;
+
+    } else {
+
+  set(ref(db, "reservations/" + phon_no), {
+    phon_no,
+    car_no,
+    checkIn,
+    checkOut,
+    createdAt: Date.now()
+  });
+  let a1 = checkIn.split('-');
+  let a2 = checkOut.split('-');
+ showPopup("<div style='border:1px solid #ccc; padding:10px; margin-top:10px; font-weight:bold; font-size:34px;'>" +
+"차량 번호 : " + car_no + "<br>" +
+"휴대폰 번호 : " + phon_no + "<br>" +
+"입차 일시 : " + a1[0]+"년"+a1[1]+"월"+a1[2]+"일"+a1[3] + "시<br>" +
+"출차 일시 : " + a2[0]+"년"+a2[1]+"월"+a2[2]+"일"+a2[3] + "시<br>" +
+"예약이 접수되었습니다.</div>");
+  //alert("예약 완료!");
+  car_no = "";
+  phon_no = "";
+    }
+  });
+}
+
+// 예약 검색
+window.searchReservation = function () {
+
+  const phone = document.getElementById("num_filld").innerHTML;//document.getElementById("searchPhone").value.replace(/[^0-9]/g, "");
+
+  //if (car_no.length < 4) {
+  //      showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>차량번호 뒤 4자리 입력하세요</div>");
+  //      return;
+  //  }
+
+    if (phone.length <= 9 || phone.length >= 12) {
+        showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>전화번호를 정확히 입력하세요</div>");
+        return;
+    }
+
+  const reservationRef = ref(db, "reservations/" + phone);
+
+  get(reservationRef).then((snapshot) => {
+
+    if (snapshot.exists()) {
+
+        const r = snapshot.val();
+        let a1 = r.checkIn.split('-');
+        let a2 = r.checkOut.split('-');
+      showPopup("<div style='border:1px solid #ccc; padding:10px; margin-top:10px; font-weight:bold; font-size:34px;'>" +
+        "전화번호: " + r.phon_no + "<br>" +
+        "차량번호: " + r.car_no + "<br>" +
+        "입차: " + a1[0]+"년"+a1[1]+"월"+a1[2]+"일"+a1[3] + "시<br>" +
+        "출차: " + a2[0]+"년"+a2[1]+"월"+a2[2]+"일"+a2[3] + "시<br>예약 접수 되어있습니다!</div>");
+
+    } else {
+
+      showPopup("<div style='color:red; margin-top:10px; font-weight:bold; font-size:34px;'>예약 내역이 없습니다.</div>");
+
+    }
+
+  });
+
+}
+// 실시간 목록 표시
+
+const reservationRef = ref(db, "data");
+
+onValue(reservationRef, (snapshot) => {
+  const data = snapshot.val();
+  //const listDiv = document.getElementById("reservationList");
+  //listDiv.innerHTML = "";
+
+  if (!data) return;
+
+  for (let key in data) {
+    const r = data[key];
+    let dd = r.day.split('/');
+    mainmony = dd[0].split('^');
+    mainday = dd[1].split('^').filter(d => d !== "");
+    maingoldday = dd[2].split('^');
+    numbers = [0, ...r.setting.split("/").map(Number).filter(n => !isNaN(n))];
+    //r.day
+    //listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
+  }
+});
+
+</script>
+    </body>
+
+</html>
+
