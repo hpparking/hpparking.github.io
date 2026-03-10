@@ -8,10 +8,9 @@
     <meta name="description" content="김해공항 현대주차장 예약 서비스. 김해공항 민영주차장 장기주차 및 단기주차 안내. 공항 앞 편리한 주차 예약 가능합니다.">
     <meta name="keywords" content="김해공항 주차장, 김해공항 민영주차장, 김해공항 주차 예약, 김해공항 장기주차, 김해공항 현대주차장">
     <meta name="robots" content="index,follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--meta name="viewport" content="width=device-width, initial-scale=1"-->
     <link rel="canonical" href="https://hpparking.github.io/">
     <meta name="naver-site-verification" content="338f62d26d99529ca9440dc29cb64730944ccee2" >
-    <!--meta name="google-site-verification" content="k_U72oTB-Jo0oM8YabG1fzbuexIu5s4xbhAA7qltBkM"-->
     <meta property="og:type" content="website">
     <meta property="og:title" content="김해공항 현대주차장 예약">
     <meta property="og:description" content="김해공항 민영주차장 장기주차 및 주차 예약 안내">
@@ -200,28 +199,7 @@
             <br>
             <br>
             <br>
-            <!--strong style="font-size: 55px;">현대 주차장(요금계산&바로예약)</strong-->
-<div style="display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap;">
-
-<strong style="font-size:55px;">
-현대 주차장(요금계산&바로예약)
-</strong>
-
-<a href="https://hp6709.my.canva.site/"
-style="
-padding:14px 24px;
-background:#ff6600;
-color:#fff;
-font-size:40px;
-font-weight:bold;
-border-radius:8px;
-text-decoration:none;
-">
-🚗 현대주차장 홈/안내
-</a>
-
-</div>
-                
+            <strong style="font-size: 55px;">현대 주차장(요금계산&바로예약)</strong>
             <br>
             <br>
             <div id=rectangle>
@@ -953,11 +931,12 @@ text-decoration:none;
                 checkOut.setHours(0,0,0,0);
 
 
-                const extraStart = new Date(maingoldday[0]);
-                const extraEnd = new Date(maingoldday[1]);
-
-                extraStart.setHours(0,0,0,0);
-                extraEnd.setHours(0,0,0,0);
+                let d = (maingoldday[0] != "")? new Date(maingoldday[0]): new Date(new Date().setDate(new Date().getDate() - 1));
+                const extraStart = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                
+                d = (maingoldday[1] != "")? new Date(maingoldday[1]): new Date(new Date().setDate(new Date().getDate() - 1));
+                const extraEnd = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                console.log("extraStart - " + extraStart + "      extraEnd - " + extraEnd);
 
                 let sun_m = 0;   // 주말/특정일 금액
                 let day_m = 0;   // 평일 금액
@@ -1310,10 +1289,6 @@ onValue(reservationRef, (snapshot) => {
     </body>
 
 </html>
-
-
-
-
 
 
 
