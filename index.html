@@ -52,10 +52,29 @@
     </div>
         
         <style>
-        img{
-    max-width:100%;
-    height:auto;
-}
+            body { 
+                font-size: 14px; 
+            }
+
+/* 태블릿 */
+            @media (max-width: 768px) {
+            body{
+                transform: scale(0.5);
+                transform-origin: top center;
+                width: 150%;
+                }
+            }
+
+/* 데스크탑 */
+            @media (min-width: 1024px) {
+                body { font-size: 18px; }
+            }
+
+
+            img{
+                max-width:100%;
+                height:auto;
+            }
             #rectangle {
                 background-color: greenyellow;
                 width: 100%;
@@ -147,23 +166,7 @@
                 margin: 0 auto;
             }
             
-            body { 
-  font-size: 14px; 
-}
-
-/* 태블릿 */
-@media (max-width: 768px) {
-  body{
-    transform: scale(0.5);
-    transform-origin: top center;
-    width: 200%;
-  }
-}
-
-/* 데스크탑 */
-@media (min-width: 1024px) {
-  body { font-size: 18px; }
-}
+            
 
 
         </style>
