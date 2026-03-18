@@ -1258,8 +1258,8 @@ var out =
   phon_no = "";
     }
   });
-}
 
+}
 // 예약 검색
 window.searchReservation = function () {
 
@@ -1303,12 +1303,12 @@ window.searchReservation = function () {
 
 // 실시간 목록 표시
 
-const reservationRef = ref(db, "data");
+const reservationRef1 = ref(db, "data");
 
-onValue(reservationRef, (snapshot) => {
+onValue(reservationRef1, (snapshot) => {
   const data = snapshot.val();
-  const listDiv = document.getElementById("recentList");
-  listDiv.innerHTML = "";
+  //const listDiv = document.getElementById("recentList");
+  //listDiv.innerHTML = "";
 
   if (!data) return;
 
@@ -1320,15 +1320,13 @@ onValue(reservationRef, (snapshot) => {
     maingoldday = dd[2].split('^');
     numbers = [0, ...r.setting.split("/").map(Number).filter(n => !isNaN(n))];
     //r.day
-    listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
+    //listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
   }
 });
 
 }
-
 </script>
-<h2>최근 예약 리스트</h2>
-  <div id="recentList"></div>
+
     </body>
 
 </html>
