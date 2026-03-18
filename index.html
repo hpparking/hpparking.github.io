@@ -1299,39 +1299,44 @@ window.searchReservation = function () {
 
   });
 
-
+  // 최근 5개 검색...
 const reservationRef1 = ref(db, "reservations");
 const recentQuery = query(reservationRef1, limitToLast(5));
 
 onValue(recentQuery, (snapshot) => {
   const data = snapshot.val();
+  console.log(data); // 데이터 확인용
   if (!data) return;
 
   const listDiv = document.getElementById("recentList");
   listDiv.innerHTML = ""; // 초기화
 
+  // 객체 → 배열로 변환
   const list = Object.entries(data).map(([key, value]) => ({
     key,
     ...value
   }));
 
-  // 최신순
+  // 최신순 정렬
   list.reverse();
 
+  // 화면에 표시
   list.forEach(r => {
     const div = document.createElement("div");
 
-    // 시간 변환
+    // createdAt 시간 변환
     const date = new Date(r.createdAt);
-    const timeStr = date.toLocaleString();
+    const timeStr = date.toLocaleString(); // "2026. 3. 19. 오후 6:00" 형태
 
     div.style.border = "1px solid #ccc";
     div.style.margin = "5px";
     div.style.padding = "10px";
 
     div.innerHTML = `
+      📞 전화번호: ${r.phon_no}<br>
       🚗 차량번호: ${r.car_no}<br>
-      🕒 예약 시간: ${timeStr}
+      🕒 예약 생성 시간: ${timeStr}<br>
+      입차: ${r.checkIn} | 출차: ${r.checkOut}
     `;
 
     listDiv.appendChild(div);
