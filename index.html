@@ -1158,6 +1158,7 @@ window.closePopup = function() {
   document.getElementById("popupOverlay").style.display = "none";
 }
 
+
         </script>
                
 <!--
@@ -1171,13 +1172,27 @@ window.closePopup = function() {
 
   <button type="button" onclick="saveReservation()">예약하기</button>"
 
-  <h3>예약 목록</h3>
-  <div id="reservationList"></div>
+  
   -->
-
+<h3>예약 목록</h3>
+  <div id="reservationList"></div>
         <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLnisp16OuLsNF32jAoc2S6dz3eLNEcsY",
+  authDomain: "paking-data.firebaseapp.com",
+  databaseURL: "https://paking-data-default-rtdb.firebaseio.com",
+  projectId: "paking-data",
+  storageBucket: "paking-data.firebasestorage.app",
+  messagingSenderId: "335256389912",
+  appId: "1:335256389912:web:012f45d4d460f84dd2766d"
+};
+/*
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";//
 //import { get, ref, set } from "firebase/database";
 
 const firebaseConfig = {
@@ -1189,7 +1204,7 @@ const firebaseConfig = {
   messagingSenderId: "335256389912",
   appId: "1:335256389912:web:012f45d4d460f84dd2766d"
 };
-
+*/
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
@@ -1260,6 +1275,8 @@ var out =
   });
 
 }
+
+
 // 예약 검색
 window.searchReservation = function () {
 
@@ -1297,17 +1314,13 @@ window.searchReservation = function () {
     }
 
   });
-
 }
 
+  const reservationRefRecent = ref(db, "data");
 
-// 실시간 목록 표시
-
-const reservationRef1 = ref(db, "data");
-
-onValue(reservationRef1, (snapshot) => {
+onValue(reservationRefRecent, (snapshot) => {
   const data = snapshot.val();
-  //const listDiv = document.getElementById("recentList");
+  //const listDiv = document.getElementById("reservationList");
   //listDiv.innerHTML = "";
 
   if (!data) return;
@@ -1323,6 +1336,13 @@ onValue(reservationRef1, (snapshot) => {
     //listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
   }
 });
+
+
+
+
+// 실시간 목록 표시
+
+
 
 
 </script>
