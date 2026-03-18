@@ -224,8 +224,6 @@
 </div>
 
 
-
-
             <div class="container">
             <br>
             <br>
@@ -280,7 +278,7 @@
             </div>
             <!--<p>XHTML(Extensible HyperText Markup Language)은 확장성이 있는 하이퍼텍스트 마크업 언어이다.</p>-->
 
-
+            
             <div class="wrap">
 
                 <div id="pop_info_1" class="pop_wrap" style="display:none;">
@@ -373,9 +371,11 @@
             <button style="border: 6px solid gray; background-color: white; border-color: green; width: 550px; height: 84px; font-size: 50px;" onclick="serch_phon_box();"><strong>예약 확인(조회)하기</strong></button>
             <br>
             </div>
-
+            <h2>최근 예약 리스트</h2>
+  <div id="recentList"></div>
 
         </div>
+        
         <!-- 처음부터 보이려면, <details open > -->
         <script type="text/javascript">
 
@@ -1299,12 +1299,51 @@ window.searchReservation = function () {
 
   });
 
-}
+
+const reservationRef1 = ref(db, "reservations");
+const recentQuery = query(reservationRef1, limitToLast(5));
+
+onValue(recentQuery, (snapshot) => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  const listDiv = document.getElementById("recentList");
+  listDiv.innerHTML = ""; // 초기화
+
+  const list = Object.entries(data).map(([key, value]) => ({
+    key,
+    ...value
+  }));
+
+  // 최신순
+  list.reverse();
+
+  list.forEach(r => {
+    const div = document.createElement("div");
+
+    // 시간 변환
+    const date = new Date(r.createdAt);
+    const timeStr = date.toLocaleString();
+
+    div.style.border = "1px solid #ccc";
+    div.style.margin = "5px";
+    div.style.padding = "10px";
+
+    div.innerHTML = `
+      🚗 차량번호: ${r.car_no}<br>
+      🕒 예약 시간: ${timeStr}
+    `;
+
+    listDiv.appendChild(div);
+  });
+});
+
+
 // 실시간 목록 표시
 
-const reservationRef = ref(db, "data");
+const reservationRef2 = ref(db, "data");
 
-onValue(reservationRef, (snapshot) => {
+onValue(reservationRef2, (snapshot) => {
   const data = snapshot.val();
   //const listDiv = document.getElementById("reservationList");
   //listDiv.innerHTML = "";
@@ -1323,6 +1362,7 @@ onValue(reservationRef, (snapshot) => {
   }
 });
 
+}
 </script>
 
     </body>
