@@ -1303,12 +1303,12 @@ window.searchReservation = function () {
 
 // 실시간 목록 표시
 
-const reservationRef2 = ref(db, "data");
+const reservationRef = ref(db, "data");
 
-onValue(reservationRef2, (snapshot) => {
+onValue(reservationRef, (snapshot) => {
   const data = snapshot.val();
-  //const listDiv = document.getElementById("reservationList");
-  //listDiv.innerHTML = "";
+  const listDiv = document.getElementById("recentList");
+  listDiv.innerHTML = "";
 
   if (!data) return;
 
@@ -1320,7 +1320,7 @@ onValue(reservationRef2, (snapshot) => {
     maingoldday = dd[2].split('^');
     numbers = [0, ...r.setting.split("/").map(Number).filter(n => !isNaN(n))];
     //r.day
-    //listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
+    listDiv.innerHTML = mainmony + "<br>" + mainday + "<br>" + maingoldday;
   }
 });
 
